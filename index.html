@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<link rel="icon" href="data:,">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-Telecom — 통신사 업무 안내 에이전트</title>
+<meta name="description" content="휴대폰 요금제·인터넷/IPTV·유심·로밍·결합상품 등 통신사 관련 요청을 대화로 안내하는 혼디넷의 통신 안내 에이전트입니다.">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --gov-header: #001233;
+  --gov-nav:    #0F3D5C;
+  --primary:    #0E7BA8;
+  --primary-dk: #0B6389;
+  --primary-lt: #2E9FCE;
+  --primary-bg: #E9F5FA;
+  --primary-bd: #BFE2F0;
+  --accent:     #0E7BA8;
+  --accent-dk:  #0B6389;
+  --accent-bg:  #E9F5FA;
+  --surface:    #FFFFFF;
+  --bg:         #F5F6FA;
+  --border:     #DFE2ED;
+  --text:       #1A202C;
+  --sub:        #4A5568;
+  --hint:       #718096;
+  --green:      #1B6B3A; --green-bg: #E6F4EC;
+  --orange:     #C05621; --orange-bg: #FEF3E2;
+  --red:        #C01C28; --red-bg: #FEE2E2;
+  --font: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  --shadow-1: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-2: 0 6px 18px rgba(0,0,0,.10);
+  --r: 6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); font-size: 14px; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.gov-bar { background: var(--gov-header); color: rgba(255,255,255,.72); font-size: 11px; padding: 6px 0; text-align: center; letter-spacing: .3px; font-weight: 500; }
+.gov-bar a { color: rgba(255,255,255,.90); font-weight: 700; }
+.gov-bar a:hover { text-decoration: underline; }
+
+.topnav { background: var(--gov-nav); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 10px rgba(0,0,0,.22); }
+.topnav-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; display: flex; align-items: stretch; height: 54px; }
+.topnav-logo { display: flex; align-items: center; gap: 9px; font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -.4px; padding-right: 18px; border-right: 1px solid rgba(255,255,255,.15); flex-shrink: 0; margin-right: 6px; }
+.topnav-logo-icon { width: 30px; height: 30px; background: var(--primary-lt); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; }
+.topnav-links { display: flex; flex: 1; }
+.topnav-links a { display: flex; align-items: center; padding: 0 15px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.72); transition: background .15s, color .15s; border-bottom: 3px solid transparent; white-space: nowrap; }
+.topnav-links a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.topnav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; padding-left: 16px; flex-shrink: 0; }
+.topnav-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.55); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
+.topnav-cta { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); color: #fff; padding: 7px 14px; border-radius: var(--r); font-size: 12px; font-weight: 700; }
+.topnav-cta:hover { background: rgba(255,255,255,.18); }
+
+.hero { background: linear-gradient(150deg, #062C40 0%, #0B4A69 55%, #0E7BA8 100%); color: #fff; padding: 60px 0 52px; border-bottom: 3px solid var(--primary-lt); }
+.hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.16); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.80); letter-spacing: .3px; margin-bottom: 18px; }
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+.hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -.8px; line-height: 1.35; margin-bottom: 16px; max-width: 760px; }
+.hero h1 em { color: #8FD4EE; font-style: normal; }
+.hero p { font-size: 15px; color: rgba(255,255,255,.72); line-height: 1.8; max-width: 660px; margin-bottom: 10px; }
+.hero-btns { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.hero-btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--primary-lt); color: #fff; border-radius: var(--r); font-size: 13px; font-weight: 700; transition: background .15s; }
+.hero-btn-primary:hover { opacity: .88; }
+.hero-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.20); color: rgba(255,255,255,.88); border-radius: var(--r); font-size: 13px; font-weight: 600; transition: background .15s; }
+.hero-btn-outline:hover { background: rgba(255,255,255,.14); }
+
+.wide-section { max-width: 1160px; margin: 0 auto; padding: 52px 24px; }
+.wide-section.alt { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.wide-section.alt-inner { max-width: 1160px; margin: 0 auto; padding: 52px 24px; }
+.section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); padding-bottom: 8px; border-bottom: 2px solid var(--primary); margin-bottom: 14px; display: inline-block; }
+.wide-h2 { font-size: 21px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.4px; }
+.wide-sub { font-size: 13.5px; color: var(--sub); margin-bottom: 26px; line-height: 1.75; max-width: 760px; }
+
+.cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cap-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; box-shadow: var(--shadow-1); }
+.cap-num { width: 26px; height: 26px; border-radius: 50%; background: var(--primary-bg); color: var(--primary); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.cap-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.cap-desc { font-size: 12.5px; color: var(--sub); line-height: 1.7; }
+
+.flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 8px; }
+.flow-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-bottom: none; }
+.flow-item:first-child { border-radius: var(--r) var(--r) 0 0; }
+.flow-item:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 var(--r) var(--r); }
+.flow-num { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.flow-body { flex: 1; }
+.flow-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+.flow-title { font-size: 14px; font-weight: 800; }
+.flow-desc { font-size: 12.5px; color: var(--sub); line-height: 1.65; }
+
+.badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.badge-accent { background: var(--accent-bg); color: var(--accent-dk); }
+.badge-blue   { background: var(--primary-bg); color: var(--primary); }
+.badge-orange { background: var(--orange-bg); color: var(--orange); }
+.badge-green  { background: var(--green-bg); color: var(--green); }
+.badge-gray   { background: #EDEFF3; color: var(--sub); }
+
+.limit-list { display: flex; flex-direction: column; gap: 10px; }
+.limit-item { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow-1); }
+.limit-icon { color: var(--orange); flex-shrink: 0; margin-top: 1px; }
+.limit-text { font-size: 12.5px; color: var(--text); line-height: 1.7; }
+.limit-text strong { font-weight: 700; }
+
+.svc-table-wrap { overflow-x: auto; margin-bottom: 20px; }
+.svc-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.svc-table th { padding: 10px 14px; text-align: left; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--hint); border-bottom: 2px solid var(--border); background: var(--bg); }
+.svc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--sub); }
+.svc-table tr:last-child td { border-bottom: none; }
+
+.principle-strip { background: var(--primary-bg); border: 1px solid var(--primary-bd); border-radius: var(--r); padding: 18px 20px; font-size: 12.5px; color: var(--text); line-height: 1.8; margin-bottom: 24px; }
+.principle-strip strong { color: var(--primary); }
+
+.docs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.doc-card { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow-1); transition: border-color .15s, transform .1s; }
+.doc-card:hover { border-color: var(--primary-lt); transform: translateY(-1px); }
+.doc-icon { width: 30px; height: 30px; border-radius: 7px; background: var(--primary-bg); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.doc-title { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
+.doc-desc { font-size: 11.5px; color: var(--hint); line-height: 1.55; }
+
+footer { background: var(--gov-header); color: rgba(255,255,255,.55); padding: 30px 0; }
+.footer-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11.5px; }
+.footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+.footer-links a:hover { color: #fff; }
+
+@media (max-width: 860px) {
+  .cap-grid, .docs-grid { grid-template-columns: 1fr; }
+  .topnav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="gov-bar">혼디넷(hondi.net) K-서비스 — <a href="https://hondi.net" target="_blank">hondi.net으로 돌아가기 ↗</a></div>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="topnav-logo"><span class="topnav-logo-icon">📶</span>K-Telecom</a>
+    <div class="topnav-links">
+      <a href="#capabilities">다루는 영역</a><a href="#limits">정직한 한계</a><a href="#docs">문서</a>
+    </div>
+    <div class="topnav-right">
+      <div class="topnav-status"><span class="status-dot"></span>hondi.net 앱 내 서비스 · 라이브 운영 중</div>
+      <a href="https://hondi.net/desktop.html#k-services" target="_blank" class="topnav-cta">hondi.net에서 열기 ↗</a>
+    </div>
+  </div>
+</nav>
+
+<div id="top"></div>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> hondi.net 지갑 로그인 필요 · 본인인증 필요한 실행은 통신사 창구로 연결</div>
+    <h1>통신사 업무, <em>절차부터 정리해서</em> 안내합니다</h1>
+    <p>휴대폰 요금제·인터넷/IPTV·유심·로밍·결합상품 등 통신사 관련 요청을 대화형으로 파악해 절차를 안내하는 혼디넷의 K-Telecom입니다.</p>
+    <p>명의도용 방지를 위해 본인인증이 필요한 최종 실행(개통·명의변경·해지 등)은 이용자 본인이 통신사 앱·대리점에서 직접 완료해야 합니다.</p>
+    <div class="hero-btns">
+      <a href="https://hondi.net/desktop.html#k-services" target="_blank" class="hero-btn-primary">hondi.net에서 열기 ↗</a>
+      <a href="https://hondi.net/prompts/SP-23_ktelecom_v1.0.txt" target="_blank" class="hero-btn-outline">정본 문서 ↗</a>
+    </div>
+  </div>
+</div>
+
+
+<section class="wide-section" id="capabilities">
+  <div class="section-title">다루는 영역</div>
+  <h2 class="wide-h2">통신사 관련 요청을 대화로 파악해 절차를 안내합니다</h2>
+  <p class="wide-sub">휴대폰 요금제·인터넷/IPTV·유심·로밍·결합상품 등 통신사 관련 요청을 대화형으로 파악해 절차를 안내합니다. 명의도용 방지를 위해 본인인증이 필요한 최종 실행(개통·명의변경·해지 등)은 이용자 본인이 통신사 앱·대리점에서 직접 완료해야 합니다.</p>
+  <div class="cap-grid">
+    <div class="cap-card"><div class="cap-num">1</div><div class="cap-title">요금제·결합상품</div><div class="cap-desc">요금제 변경·조회, 결합상품 가입, 통신사 멤버십 혜택 확인.</div></div>
+    <div class="cap-card"><div class="cap-num">2</div><div class="cap-title">인터넷·IPTV·유심</div><div class="cap-desc">인터넷·IPTV 신규설치·해지, 유심 재발급·개통, 공유기·인터넷 AS 신청.</div></div>
+    <div class="cap-card"><div class="cap-num">3</div><div class="cap-title">로밍·기기변경·자동이체</div><div class="cap-desc">국내외 로밍 신청, 기기변경(단말기 교체) 예약, 통신요금 자동이체 등록.</div></div>
+    <div class="cap-card"><div class="cap-num">4</div><div class="cap-title">분실신고 — 예외적 신속 처리</div><div class="cap-desc">명의도용·소액결제 피해를 막기 위한 임시 정지 신청 절차는 즉시 안내하되, 실제 정지 처리(본인인증 필요)는 통신사 앱·고객센터(114 등)로 연결합니다.</div></div>
+    <div class="cap-card"><div class="cap-num">5</div><div class="cap-title">스팸문자 신고 접수</div><div class="cap-desc">스팸문자 신고 접수를 대화로 처리합니다.</div></div>
+  </div>
+</section>
+
+<div class="wide-section alt">
+  <div class="wide-section alt-inner" style="padding:52px 24px;">
+    <div class="section-title">다른 서비스와의 경계</div>
+    <h2 class="wide-h2">어디까지가 K-Telecom이고, 어디부터 본인이 직접인지</h2>
+    <div class="svc-table-wrap">
+      <table class="svc-table">
+        <thead><tr><th>상황</th><th>담당</th></tr></thead>
+        <tbody>
+          <tr><td>단말기 자체 구매(기기값 결제, 쇼핑몰 거래)</td><td>K-Market 소관</td></tr>
+          <tr><td>통신사 결합 프로그램형 기기변경</td><td>K-Telecom 소관</td></tr>
+          <tr><td>회선 개통·명의변경·해지 등 최종 실행</td><td>본인인증 후 통신사 앱·대리점에서 본인이 직접</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="principle-strip">
+      전기통신사업법 등 통신 관련 법령상 본인확인이 필수인 최종 실행은 혼디가 대신 완료했다고 안내하지 않습니다 — 절차 안내까지가 혼디의 역할입니다.
+    </div>
+  </div>
+</div>
+
+<section class="wide-section" id="limits">
+  <div class="section-title">정직한 한계</div>
+  <h2 class="wide-h2">본인인증이 필요한 최종 실행은 대신하지 않습니다</h2>
+  <div class="limit-list">
+    <div class="limit-item"><span class="limit-icon">⚠</span><div class="limit-text"><strong>개통·명의변경·해지</strong> — 명의도용 방지를 위해 본인인증이 필수인 최종 실행은 이용자 본인이 통신사 앱·대리점에서 직접 완료해야 합니다.</div></div>
+    <div class="limit-item"><span class="limit-icon">⚠</span><div class="limit-text"><strong>분실신고 실제 정지 처리</strong> — 임시 정지 신청 절차 안내까지만 하며, 실제 처리(본인인증 필요)는 통신사 창구로 연결합니다.</div></div>
+  </div>
+</section>
+
+<div class="wide-section alt">
+  <div class="wide-section alt-inner" style="padding:52px 24px;" id="docs">
+    <div class="section-title">문서</div>
+    <h2 class="wide-h2">개발자 문서</h2>
+    <div class="docs-grid">
+      <a class="doc-card" href="https://hondi.net/prompts/SP-23_ktelecom_v1.0.txt" target="_blank"><div class="doc-icon">◆</div><div><div class="doc-title">SP-23_ktelecom_v1.0.txt — 정본</div><div class="doc-desc">K-Telecom의 시스템 프롬프트 원문.</div></div></a>
+      <a class="doc-card" href="https://hondi.net/desktop.html#k-services" target="_blank"><div class="doc-icon">◆</div><div><div class="doc-title">hondi.net K-서비스 탭</div><div class="doc-desc">다른 K-서비스도 함께 확인할 수 있습니다.</div></div></a>
+      <a class="doc-card" href="https://github.com/Openhash-Gopang/hondi" target="_blank"><div class="doc-icon">◆</div><div><div class="doc-title">GitHub — Openhash-Gopang/hondi ↗</div><div class="doc-desc">혼디넷 메인 저장소.</div></div></a>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 혼디넷(hondi.net) · K-Telecom · 팀 주피터</div>
+    <div class="footer-links">
+      <a href="https://hondi.net" target="_blank">hondi.net</a>
+      <a href="https://klaw.hondi.net" target="_blank">klaw.hondi.net</a>
+      <a href="https://plan.hondi.net" target="_blank">plan.hondi.net</a>
+      <a href="https://mail.hondi.net" target="_blank">mail.hondi.net</a>
+      <a href="https://github.com/Openhash-Gopang/hondi" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
